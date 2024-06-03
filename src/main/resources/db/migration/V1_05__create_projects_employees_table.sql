@@ -1,4 +1,4 @@
-CREATE TABLE project_employees
+CREATE TABLE projects_employees
 (
     project_id  INT,
     employee_id INT,

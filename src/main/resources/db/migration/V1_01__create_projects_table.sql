@@ -8,5 +8,5 @@ CREATE TABLE projects
     start_date       DATE,
     deadline         DATE,
     estimated_hours  INT,
-    is_deleted       BOOLEAN DEFAULT FALSE
+    is_deleted       BOOLEAN DEFAULT FALSE                                              NOT NULL
 );

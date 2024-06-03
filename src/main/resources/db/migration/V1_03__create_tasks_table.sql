@@ -8,5 +8,5 @@ CREATE TABLE tasks
     status         VARCHAR(20) CHECK (status IN ('ACTIVE', 'COMPLETED')) NOT NULL,
     create_date    DATE                                                  NOT NULL,
     deadline       DATE,
-    is_deleted     BOOLEAN DEFAULT FALSE
+    is_deleted     BOOLEAN DEFAULT FALSE                                 NOT NULL
 );
