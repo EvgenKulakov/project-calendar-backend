@@ -1,6 +1,6 @@
-package com.itssamara.project.calendar.backend.repository;
+package com.its.samara.project.calendar.backend.repository;
 
-import com.itssamara.project.calendar.backend.entity.Task;
+import com.its.samara.project.calendar.backend.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

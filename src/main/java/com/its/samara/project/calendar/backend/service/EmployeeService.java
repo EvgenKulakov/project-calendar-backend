@@ -1,7 +1,7 @@
-package com.itssamara.project.calendar.backend.service;
+package com.its.samara.project.calendar.backend.service;
 
-import com.itssamara.project.calendar.backend.entity.Employee;
-import com.itssamara.project.calendar.backend.repository.EmployeeRepository;
+import com.its.samara.project.calendar.backend.entity.Employee;
+import com.its.samara.project.calendar.backend.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

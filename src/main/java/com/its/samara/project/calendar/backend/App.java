@@ -1,4 +1,4 @@
-package com.itssamara.project.calendar.backend;
+package com.its.samara.project.calendar.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

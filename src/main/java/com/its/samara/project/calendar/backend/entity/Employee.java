@@ -1,4 +1,4 @@
-package com.itssamara.project.calendar.backend.entity;
+package com.its.samara.project.calendar.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

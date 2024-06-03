@@ -1,4 +1,4 @@
-CREATE TABLE stages
+CREATE TABLE IF NOT EXISTS stages
 (
     id          SERIAL PRIMARY KEY,
     project_id  INT REFERENCES projects (id),

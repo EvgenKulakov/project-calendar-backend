@@ -1,4 +1,4 @@
-package com.itssamara.project.calendar.backend;
+package com.its.samara.project.calendar.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.itssamara.project.calendar.backend.entity;
+package com.its.samara.project.calendar.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,9 +36,6 @@ public class Project {
     @JoinColumn(name = "current_stage_id")
     private Stage currentStage;
 
-    @OneToMany(mappedBy = "project")
-    List<Stage> stages = new ArrayList<>();
-
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -48,14 +45,17 @@ public class Project {
     @Column(name = "estimated_hours")
     private Integer estimatedHours;
 
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted;
+
+    @OneToMany(mappedBy = "project")
+    List<Stage> stages = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(name = "projects_employees",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private Set<Employee> employees = new HashSet<>();
-
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted;
 
 
     public enum Status {
