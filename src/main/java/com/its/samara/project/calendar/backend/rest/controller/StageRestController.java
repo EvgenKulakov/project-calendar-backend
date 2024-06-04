@@ -1,5 +1,7 @@
 package com.its.samara.project.calendar.backend.rest.controller;
 
+import com.its.samara.project.calendar.backend.converter.StageParser;
+import com.its.samara.project.calendar.backend.dto.StageDTO;
 import com.its.samara.project.calendar.backend.entity.Stage;
 import com.its.samara.project.calendar.backend.service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class StageRestController {
 
     @Autowired
     private StageService stageService;
+    @Autowired
+    private StageParser stageParser;
 
     @GetMapping("/stages")
     public List<Stage> getAllProjects() {
@@ -22,12 +26,15 @@ public class StageRestController {
     }
 
     @GetMapping("/stages/{id}")
-    public ResponseEntity<Stage> getStageById(@PathVariable("id") Integer id) {
+    public ResponseEntity<StageDTO> getStageById(@PathVariable("id") Integer id) {
         Stage stage = stageService.findById(id);
         if (stage == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(stage);
+
+        StageDTO stageDTO = stageParser.convertToDTO(stage);
+
+        return ResponseEntity.ok(stageDTO);
     }
 
     @PostMapping("/stages")

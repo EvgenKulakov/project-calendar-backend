@@ -1,6 +1,5 @@
 package com.its.samara.project.calendar.backend.service;
 
-import com.its.samara.project.calendar.backend.entity.Project;
 import com.its.samara.project.calendar.backend.entity.Stage;
 import com.its.samara.project.calendar.backend.repository.StageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class StageService {
 
         if (optionalStage.isPresent()) {
             Stage existingStage = optionalStage.get();
-//            existingStage.setProject(stageDetails.getProject());
+            existingStage.setProjectId(stageDetails.getProjectId());
             existingStage.setName(stageDetails.getName());
             existingStage.setDescription(stageDetails.getDescription());
             existingStage.setStartDate(stageDetails.getStartDate());
@@ -56,6 +55,7 @@ public class StageService {
         else return null;
     }
 
+    @Transactional
     public Stage patch(Integer id, Map<String, Object> updates) {
         Optional<Stage> optionalStage = stageRepository.findAllByIdAndIsDeletedFalse(id);
         if (optionalStage.isPresent()) {
@@ -63,7 +63,7 @@ public class StageService {
 
             updates.forEach((key, value) -> {
                 switch (key) {
-//                    case "project" -> existingStage.setProject((Project) value);
+                    case "projectId" -> existingStage.setProjectId((Integer) value);
                     case "name" -> existingStage.setName((String) value);
                     case "description" -> existingStage.setDescription((String) value);
                     case "startDate" -> existingStage.setStartDate((LocalDate) value);

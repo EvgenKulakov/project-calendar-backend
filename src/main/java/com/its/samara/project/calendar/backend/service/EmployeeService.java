@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 @Service
 public class EmployeeService {
@@ -27,10 +25,11 @@ public class EmployeeService {
         return employeeRepository.findAllByIsDeletedFalse();
     }
 
-//    @Transactional
-//    public Set<Employee> findAllByProjectId(Integer projectId) {
-//        return employeeRepository.findAllByProjectIdAndIsDeletedFalse(projectId);
-//    }
+    @Transactional
+    public List<Employee> findAllByIds(int[] ids) {
+        List<Integer> idsList = IntStream.of(ids).boxed().toList();
+        return employeeRepository.findAllByIdInAndIsDeletedFalse(idsList);
+    }
 
     @Transactional
     public Employee save(Employee employee) {
@@ -45,6 +44,7 @@ public class EmployeeService {
             Employee existingEmployee = optionalEmployee.get();
             existingEmployee.setFirstName(employeeDetails.getFirstName());
             existingEmployee.setLastName(employeeDetails.getLastName());
+            existingEmployee.setProjectIds(employeeDetails.getProjectIds());
 
             return employeeRepository.save(existingEmployee);
         }
@@ -52,6 +52,7 @@ public class EmployeeService {
         else return null;
     }
 
+    @Transactional
     public Employee patch(Integer id, Map<String, Object> updates) {
         Optional<Employee> optionalEmployee = employeeRepository.findAllByIdAndIsDeletedFalse(id);
         if (optionalEmployee.isPresent()) {
@@ -61,6 +62,7 @@ public class EmployeeService {
                 switch (key) {
                     case "firstName" -> existingEmployee.setFirstName((String) value);
                     case "lastName" -> existingEmployee.setLastName((String) value);
+                    case "projectIds" -> existingEmployee.setProjectIds((int[]) value);
                 }
             });
 

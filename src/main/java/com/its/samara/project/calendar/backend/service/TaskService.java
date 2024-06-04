@@ -1,6 +1,5 @@
 package com.its.samara.project.calendar.backend.service;
 
-import com.its.samara.project.calendar.backend.entity.Stage;
 import com.its.samara.project.calendar.backend.entity.Task;
 import com.its.samara.project.calendar.backend.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,11 @@ public class TaskService {
     }
 
     @Transactional
+    public List<Task> findAllByStageId(Integer stageId) {
+        return taskRepository.findAllByStageIdAndIsDeletedFalse(stageId);
+    }
+
+    @Transactional
     public Task save(Task task) {
         return taskRepository.save(task);
     }
@@ -39,7 +43,7 @@ public class TaskService {
 
         if (optionalTask.isPresent()) {
             Task existingTask = optionalTask.get();
-//            existingTask.setStage(taskDetails.getStage());
+            existingTask.setStageId(taskDetails.getStageId());
             existingTask.setName(taskDetails.getName());
             existingTask.setDescription(taskDetails.getDescription());
             existingTask.setLinkToGitlab(taskDetails.getLinkToGitlab());
@@ -53,6 +57,7 @@ public class TaskService {
         else return null;
     }
 
+    @Transactional
     public Task patch(Integer id, Map<String, Object> updates) {
         Optional<Task> optionalTask = taskRepository.findAllByIdAndIsDeletedFalse(id);
         if (optionalTask.isPresent()) {
@@ -60,7 +65,7 @@ public class TaskService {
 
             updates.forEach((key, value) -> {
                 switch (key) {
-//                    case "stage" -> existingTask.setStage((Stage) value);
+                    case "stageId" -> existingTask.setStageId((Integer) value);
                     case "name" -> existingTask.setName((String) value);
                     case "description" -> existingTask.setDescription((String) value);
                     case "linkToGitlab" -> existingTask.setLinkToGitlab((String) value);

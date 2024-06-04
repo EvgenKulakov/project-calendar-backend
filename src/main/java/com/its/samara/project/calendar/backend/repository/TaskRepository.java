@@ -13,4 +13,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     Optional<Task> findAllByIdAndIsDeletedFalse(Integer id);
 
     List<Task> findAllByIsDeletedFalse();
+
+    List<Task> findAllByStageIdAndIsDeletedFalse(Integer stageId);
 }
