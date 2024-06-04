@@ -13,4 +13,6 @@ public interface StageRepository extends JpaRepository<Stage, Integer> {
     Optional<Stage> findAllByIdAndIsDeletedFalse(Integer id);
 
     List<Stage> findAllByIsDeletedFalse();
+
+    List<Stage> findAllByProjectIdAndIsDeletedFalse(Integer projectId);
 }

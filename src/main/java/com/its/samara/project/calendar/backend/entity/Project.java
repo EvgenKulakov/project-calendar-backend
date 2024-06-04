@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,9 +28,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne
-    @JoinColumn(name = "current_stage_id")
-    private Stage currentStage;
+    @Column(name = "current_stage_id")
+    private Integer currentStageId;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -42,20 +37,14 @@ public class Project {
     @Column(name = "deadline")
     private LocalDate deadline;
 
+    @Column(name = "employee_ids", columnDefinition = "int[]")
+    private int[] employeeIds;
+
     @Column(name = "estimated_hours")
     private Integer estimatedHours;
 
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
-
-    @OneToMany(mappedBy = "project")
-    List<Stage> stages = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(name = "projects_employees",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    private Set<Employee> employees = new HashSet<>();
 
 
     public enum Status {

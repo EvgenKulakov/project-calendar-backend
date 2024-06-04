@@ -1,24 +1,36 @@
 package com.its.samara.project.calendar.backend.rest.controller;
 
+import com.its.samara.project.calendar.backend.entity.Employee;
+import com.its.samara.project.calendar.backend.entity.Stage;
+import com.its.samara.project.calendar.backend.service.EmployeeService;
 import com.its.samara.project.calendar.backend.service.ProjectService;
 import com.its.samara.project.calendar.backend.entity.Project;
+import com.its.samara.project.calendar.backend.service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class ProjectRestController {
 
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private StageService stageService;
+    @Autowired
+    private EmployeeService employeeService;
+
 
     @GetMapping("/projects")
     public List<Project> getAllProjects() {
-        return projectService.findAll();
+        List<Project> projects = projectService.findAll();
+        return projects;
     }
 
     @GetMapping("/projects/{id}")
@@ -27,6 +39,11 @@ public class ProjectRestController {
         if (project == null) {
             return ResponseEntity.notFound().build();
         }
+
+//        List<Stage> stages = stageService.findAllByProjectId(project.getId());
+//        Set<Employee> employees = projectService.findAllEmployeeByProjectId(project.getId());
+
+
         return ResponseEntity.ok(project);
     }
 

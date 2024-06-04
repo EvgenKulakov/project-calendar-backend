@@ -1,12 +1,16 @@
 package com.its.samara.project.calendar.backend.service;
 
+import com.its.samara.project.calendar.backend.entity.Stage;
 import com.its.samara.project.calendar.backend.entity.Task;
 import com.its.samara.project.calendar.backend.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -30,8 +34,57 @@ public class TaskService {
     }
 
     @Transactional
-    public void softDelete(Task task) {
-        task.setIsDeleted(true);
-        taskRepository.save(task);
+    public Task update(Integer id, Task taskDetails) {
+        Optional<Task> optionalTask = taskRepository.findAllByIdAndIsDeletedFalse(id);
+
+        if (optionalTask.isPresent()) {
+            Task existingTask = optionalTask.get();
+//            existingTask.setStage(taskDetails.getStage());
+            existingTask.setName(taskDetails.getName());
+            existingTask.setDescription(taskDetails.getDescription());
+            existingTask.setLinkToGitlab(taskDetails.getLinkToGitlab());
+            existingTask.setStatus(taskDetails.getStatus());
+            existingTask.setCreateDate(taskDetails.getCreateDate());
+            existingTask.setDeadline(taskDetails.getDeadline());
+
+            return taskRepository.save(existingTask);
+        }
+
+        else return null;
+    }
+
+    public Task patch(Integer id, Map<String, Object> updates) {
+        Optional<Task> optionalTask = taskRepository.findAllByIdAndIsDeletedFalse(id);
+        if (optionalTask.isPresent()) {
+            Task existingTask = optionalTask.get();
+
+            updates.forEach((key, value) -> {
+                switch (key) {
+//                    case "stage" -> existingTask.setStage((Stage) value);
+                    case "name" -> existingTask.setName((String) value);
+                    case "description" -> existingTask.setDescription((String) value);
+                    case "linkToGitlab" -> existingTask.setLinkToGitlab((String) value);
+                    case "status" -> existingTask.setStatus((Task.Status) value);
+                    case "createDate" -> existingTask.setCreateDate((LocalDate) value);
+                    case "deadline" -> existingTask.setDeadline((LocalDate) value);
+                }
+            });
+
+            return taskRepository.save(existingTask);
+        }
+
+        else return null;
+    }
+
+    @Transactional
+    public boolean softDelete(Integer id) {
+        Optional<Task> optionalTask = taskRepository.findAllByIdAndIsDeletedFalse(id);
+        if (optionalTask.isPresent()) {
+            Task taskDeleted = optionalTask.get();
+            taskDeleted.setIsDeleted(true);
+            taskRepository.save(taskDeleted);
+            return true;
+        }
+        else return false;
     }
 }

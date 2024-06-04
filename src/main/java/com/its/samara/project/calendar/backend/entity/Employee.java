@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,8 +22,8 @@ public class Employee {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @ManyToMany(mappedBy = "employees")
-    private Set<Project> projects = new HashSet<>();
+    @Column(name = "project_ids")
+    private int[] projectIds;
 
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;

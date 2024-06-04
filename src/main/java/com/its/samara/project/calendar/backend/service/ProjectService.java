@@ -1,5 +1,6 @@
 package com.its.samara.project.calendar.backend.service;
 
+import com.its.samara.project.calendar.backend.entity.Employee;
 import com.its.samara.project.calendar.backend.entity.Project;
 import com.its.samara.project.calendar.backend.entity.Stage;
 import com.its.samara.project.calendar.backend.repository.ProjectRepository;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjectService {
@@ -42,10 +44,12 @@ public class ProjectService {
             existingProject.setName(projectDetails.getName());
             existingProject.setDescription(projectDetails.getDescription());
             existingProject.setStatus(projectDetails.getStatus());
-            existingProject.setCurrentStage(projectDetails.getCurrentStage());
+//            existingProject.setCurrentStage(projectDetails.getCurrentStage());
             existingProject.setStartDate(projectDetails.getStartDate());
             existingProject.setDeadline(projectDetails.getDeadline());
             existingProject.setEstimatedHours(projectDetails.getEstimatedHours());
+//            existingProject.setStages(projectDetails.getStages());
+//            existingProject.setEmployees(projectDetails.getEmployees());
 
             return projectRepository.save(existingProject);
         }
@@ -56,21 +60,23 @@ public class ProjectService {
     public Project patch(Integer id, Map<String, Object> updates) {
         Optional<Project> optionalProject = projectRepository.findAllByIdAndIsDeletedFalse(id);
         if (optionalProject.isPresent()) {
-            Project existingResource = optionalProject.get();
+            Project existingProject = optionalProject.get();
 
             updates.forEach((key, value) -> {
                 switch (key) {
-                    case "name" -> existingResource.setName((String) value);
-                    case "description" -> existingResource.setDescription((String) value);
-                    case "status" -> existingResource.setStatus((Project.Status) value);
-                    case "currentStage" -> existingResource.setCurrentStage((Stage) value);
-                    case "startDate" -> existingResource.setStartDate((LocalDate) value);
-                    case "deadline" -> existingResource.setDeadline((LocalDate) value);
-                    case "estimatedHours" -> existingResource.setEstimatedHours((Integer) value);
+                    case "name" -> existingProject.setName((String) value);
+                    case "description" -> existingProject.setDescription((String) value);
+                    case "status" -> existingProject.setStatus((Project.Status) value);
+//                    case "currentStage" -> existingProject.setCurrentStage((Stage) value);
+                    case "startDate" -> existingProject.setStartDate((LocalDate) value);
+                    case "deadline" -> existingProject.setDeadline((LocalDate) value);
+                    case "estimatedHours" -> existingProject.setEstimatedHours((Integer) value);
+//                    case "stages" -> existingProject.setStages((List<Stage>) value);
+//                    case "employees" -> existingProject.setEmployees((Set<Employee>) value);
                 }
             });
 
-            return projectRepository.save(existingResource);
+            return projectRepository.save(existingProject);
         }
 
         else return null;

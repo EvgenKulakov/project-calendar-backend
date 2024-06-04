@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS projects
     current_stage_id INT,
     start_date       DATE,
     deadline         DATE,
+    employee_ids     INT[],
     estimated_hours  INT,
     is_deleted       BOOLEAN DEFAULT FALSE                                              NOT NULL
 );

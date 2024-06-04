@@ -18,9 +18,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "stage_id", nullable = false)
-    private Stage stage;
+    @Column(name = "stage_id", nullable = false)
+    private Integer stageId;
 
     @Column(name = "name", nullable = false)
     private String name;

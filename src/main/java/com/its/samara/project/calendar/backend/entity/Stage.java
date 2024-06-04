@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,18 +18,14 @@ public class Stage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id", nullable = false)
-    private Project project;
+    @Column(name = "project_id", nullable = false)
+    private Integer projectId;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
-
-    @OneToMany(mappedBy = "stage")
-    private List<Task> tasks = new ArrayList<>();
 
     @Column(name = "start_date")
     private LocalDate startDate;
