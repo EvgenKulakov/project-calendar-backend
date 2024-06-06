@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class ProjectRestController {
 
     @Autowired
@@ -36,6 +37,17 @@ public class ProjectRestController {
         ProjectDTO projectDTO = projectParser.convertToDTO(project);
 
         return ResponseEntity.ok(projectDTO);
+    }
+
+    @GetMapping("/projects/month")
+    public ResponseEntity<List<Project>> getProjectsByMonth(@RequestParam("year") int year,
+                                                            @RequestParam("month") int month) {
+        List<Project> projects = projectService.findByMonth(year, month);
+        if (projects.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(projects);
     }
 
     @PostMapping("/projects")

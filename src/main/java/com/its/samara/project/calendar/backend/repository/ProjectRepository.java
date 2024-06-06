@@ -4,6 +4,7 @@ import com.its.samara.project.calendar.backend.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     Optional<Project> findAllByIdAndIsDeletedFalse(Integer id);
 
     List<Project> findAllByIsDeletedFalse();
+
+    List<Project> findByStartDateBetweenAndIsDeletedFalseOrderByStartDate(LocalDate startDate, LocalDate endDate);
 }

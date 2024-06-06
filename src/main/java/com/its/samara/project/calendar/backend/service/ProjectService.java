@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,6 +26,14 @@ public class ProjectService {
     @Transactional
     public List<Project> findAll() {
         return projectRepository.findAllByIsDeletedFalse();
+    }
+
+    @Transactional
+    public List<Project> findByMonth(int year, int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+        return projectRepository.findByStartDateBetweenAndIsDeletedFalseOrderByStartDate(startDate, endDate);
     }
 
     @Transactional
