@@ -1,5 +1,7 @@
 package com.its.samara.project.calendar.backend.rest.controller;
 
+import com.its.samara.project.calendar.backend.converter.TaskParser;
+import com.its.samara.project.calendar.backend.dto.TaskDTO;
 import com.its.samara.project.calendar.backend.entity.Task;
 import com.its.samara.project.calendar.backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class TaskRestController {
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private TaskParser taskParser;
 
     @GetMapping("/tasks")
     public List<Task> getAllProjects() {
@@ -32,7 +36,8 @@ public class TaskRestController {
     }
 
     @PostMapping("/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@RequestBody TaskDTO taskDTO) {
+        Task task = taskParser.convertToEntity(taskDTO);
         Task createdTask = taskService.save(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
