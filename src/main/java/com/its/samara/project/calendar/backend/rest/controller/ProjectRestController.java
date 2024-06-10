@@ -2,6 +2,7 @@ package com.its.samara.project.calendar.backend.rest.controller;
 
 import com.its.samara.project.calendar.backend.converter.ProjectParser;
 import com.its.samara.project.calendar.backend.dto.ProjectDTO;
+import com.its.samara.project.calendar.backend.service.ProjectSaveOperator;
 import com.its.samara.project.calendar.backend.service.ProjectService;
 import com.its.samara.project.calendar.backend.entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class ProjectRestController {
     private ProjectService projectService;
     @Autowired
     private ProjectParser projectParser;
+    @Autowired
+    private ProjectSaveOperator projectSaveOperator;
 
 
     @GetMapping("/projects")
@@ -51,9 +54,9 @@ public class ProjectRestController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        Project createdProject = projectService.save(project);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
+    public ResponseEntity<Project> createProject(@RequestBody ProjectDTO projectDTO) {
+        Project savedProject = projectSaveOperator.saveProject(projectDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProject);
     }
 
     @PutMapping("/projects/{id}")

@@ -50,6 +50,7 @@ public class Project {
     public enum Status {
         CREATED,
         IN_PROGRESS,
+        EXPIRED,
         FINISH;
     }
 }

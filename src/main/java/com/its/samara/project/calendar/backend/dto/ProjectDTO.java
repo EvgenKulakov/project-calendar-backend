@@ -2,15 +2,12 @@ package com.its.samara.project.calendar.backend.dto;
 
 import com.its.samara.project.calendar.backend.entity.Employee;
 import com.its.samara.project.calendar.backend.entity.Project;
-import com.its.samara.project.calendar.backend.entity.Stage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -22,11 +19,11 @@ public class ProjectDTO {
     private String name;
     private String description;
     private Project.Status status;
-    private Stage currentStage;
-    private LocalDate startDate;
-    private LocalDate deadline;
+    private StageDTO currentStage;
+    private String startDate;
+    private String deadline;
     private Integer estimatedHours;
-    private List<Stage> stages;
+    private List<StageDTO> otherStages;
     private List<Employee> employees;
     private Boolean isDeleted;
 }

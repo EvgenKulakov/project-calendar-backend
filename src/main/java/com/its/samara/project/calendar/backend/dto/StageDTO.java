@@ -1,16 +1,13 @@
 package com.its.samara.project.calendar.backend.dto;
 
 import com.its.samara.project.calendar.backend.entity.Task;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class StageDTO {
@@ -19,8 +16,8 @@ public class StageDTO {
     private Integer projectId;
     private String name;
     private String description;
-    private LocalDate startDate;
-    private LocalDate deadline;
+    private String startDate;
+    private String deadline;
     private List<Task> tasks;
     private Boolean isDeleted;
 }
