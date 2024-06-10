@@ -1,6 +1,5 @@
 package com.its.samara.project.calendar.backend.dto;
 
-import com.its.samara.project.calendar.backend.entity.Task;
 import lombok.*;
 
 import java.util.List;
